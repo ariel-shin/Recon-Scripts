@@ -52,7 +52,7 @@ def banaan(ip_address):
 
         #write / if more than one port exists
         for x in host['data'][1:]:
-            output_csv.write(",,,,,,,,")
+            output_csv.write(foundIP)
             output_csv.write(str(x['port']))
             output_csv.write("," + "\"" + str(x['data']).replace("\r\n", ";").replace(",","").replace("\"", "").strip() + "\"" + "\n")
 
