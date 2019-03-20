@@ -16,12 +16,12 @@ For more details, visit https://www.arin.net/resources/services/whois_guide.html
 
 Note: arinscript has not been extensively tested. Since a lot of commands are based on the exact format of the limited tests I have run, some wonky output may appear. 
 
-## shodanscript.py
-shodanscript.py takes a list of IP addresses and creates a csv file with the shodan output. 
+## shodanScraper.py
+shodanScraper.py takes a list of IP addresses and creates a csv file with the shodan output. 
 
 This script is modified from https://scooby.blog/2018/01/11/shodan-search-multiple-ip-addresses-with-python-script/
 
-### Running shodanscript.py
+### Running shodanScraper.py
 To get shodanscript running, you must have a) python installed b) shodan installed
 
 
