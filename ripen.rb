@@ -58,7 +58,6 @@ def callRIPE(ip, csvFile)
 	end
 	csvString = "#{csvString}\n"
 	csvFile.write( csvString )
-	data.close
 end
 
 ipArray.each do |ip|

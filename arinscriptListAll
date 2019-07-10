@@ -1,0 +1,103 @@
+#!/usr/bin/env bash
+
+#TO DO 
+# REMOVE DUPLICATES
+# grab Net Range, CIDR, Net Name, Net Handle, Parent, Net Type, Organization, Ref from initial 
+
+#makes new directory to store output files
+mkdir arinScriptFiles
+
+#requires an argument to run the script
+NAME="${1:?Missing argument: Text File}"
+
+#https://stackoverflow.com/questions/20294918/extract-file-contents-into-array-using-bash
+getArray() {
+    array=() # Create array
+    while IFS= read -r line # Read a line
+    do
+        array+=("$line") # Append line to the array
+    done < "$1"
+}
+
+printf "IP,Net_Range,CIDR,NetName,NetHandle,Parent,NetType,Organization,Ref\n" > arinScriptFiles/BaseOutput.csv
+
+getArray $NAME
+for e in "${array[@]}"
+do 
+	echo "Searching ARIN for $e"
+	whois -h whois.arin.net "$e" > arinScriptFiles/temp.txt
+	cat arinscriptFiles/temp.txt >> arinScriptFiles/arinlookup1.txt
+
+	{ 
+	echo $e; 
+	sed -n -e '/^NetRange:/p' arinScriptFiles/temp.txt | cut -c 17-;
+	sed -n -e '/^CIDR:/p' arinScriptFiles/temp.txt | cut -c 17- | tr ',' ';';
+	sed -n -e '/^NetName:/p' arinScriptFiles/temp.txt | cut -c 17- | tr ',' ';'; 
+	sed -n -e '/^NetHandle:/p' arinScriptFiles/temp.txt | cut -c 17- | tr ',' ';';
+	sed -n -e '/^Parent:/p' arinScriptFiles/temp.txt | cut -c 17- | tr ',' ';';
+	sed -n -e '/^NetType:/p' arinScriptFiles/temp.txt | cut -c 17- | tr ',' ';';
+	sed -n -e '/^Organization:/p' arinScriptFiles/temp.txt | cut -c 17- | tr ',' ';';
+	sed -n -e '/^Ref:/p' arinScriptFiles/temp.txt | cut -c 17-;
+	} | tr "\n" "," >> arinScriptFiles/BaseOutput.csv
+	echo "" >> arinScriptFiles/BaseOutput.csv
+
+done
+
+# #PRINTS TO COMMANDLINE
+# #echo "Searching ARIN for all names in $NAME"
+
+# # output results of arin lookup with name of the company into arinlookup1.txt
+
+
+# # Ref contains a url with the Network IDs
+# sed -n -e '/^Ref:/p' arinScriptFiles/arinlookup1.txt > arinScriptFiles/arinref.txt
+
+# # Get rid of any characters that are not the URL
+# egrep -o 'https?://[^ ]+' arinScriptFiles/arinref.txt > arinScriptFiles/arinurl.txt
+
+
+
+# #creating a blank arinScriptFiles/network.txt file
+# > arinScriptFiles/network.txt
+# getArray "arinScriptFiles/arinurl.txt"
+# for e in "${array[@]}"
+# do 
+# 	#PRINTS TO COMMANDLINE
+# 	printf "Looking up $e (child network)\n"
+# 	curl -s "$e" | jq -r '.networks[].handle' >> arinScriptFiles/network.txt
+# 	#PRINTS TO COMMANDLINE
+# 	printf "Looking up $e (parent network)\n"
+# 	curl -s "$e" | jq -r '.networks[].parentHandle' >> arinScriptFiles/network.txt
+# done
+
+# printf "Net_Range, CIDR, Customer\n" > arinScriptFiles/output.csv
+
+# > arinScriptFiles/output.txt
+# getArray "arinScriptFiles/network.txt"
+# for e in "${array[@]}"
+# do
+# 	printf "$e\n" >> arinScriptFiles/output.txt
+# 	whois -h whois.arin.net "$e" >> arinScriptFiles/output.txt
+	
+# 	whois -h whois.arin.net "$e" > arinScriptFiles/temp.txt
+# 	sed -n -e '/NetRange:/p' arinScriptFiles/temp.txt | awk '{ printf $2 $3 $4}' >> arinScriptFiles/output.csv
+# 	printf "," >> arinScriptFiles/output.csv
+
+# 	#only including first cidr
+# 	sed -n -e '/CIDR:/p' arinScriptFiles/temp.txt | cut -d ' ' -f12- | tr ',' ';' | tr -d '\n' >> arinScriptFiles/output.csv
+# 	printf "," >> arinScriptFiles/output.csv
+
+# 	sed -n -e '/Customer:/p' arinScriptFiles/temp.txt | cut -d ' ' -f8- | tr ',' ';' >> arinScriptFiles/output.csv
+
+# 	sed -n -e '/Organization:/p' arinScriptFiles/temp.txt | cut -d ' ' -f4- | tr ',' ';' >> arinScriptFiles/output.csv
+# 	#printf "\n" >> output.csv
+
+# done
+
+# need curl and jq installed 
+# for macs, INSTALL HOMEBREW
+# brew install curl
+# brew install jq
+
+
+
