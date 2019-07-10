@@ -18,7 +18,7 @@ else
 end
 
 #check if output file exists
-if( File.exists?( csvFileName ) )
+if( File.exists?( csvFileName ) || File.exists?( csvFileName + ".csv" ) )
 	puts "#{csvFileName} exists... Please choose a different name"
 	exit
 elsif ( !csvFileName.end_with?( ".csv" ))
