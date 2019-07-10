@@ -40,7 +40,7 @@ file.close
 csvFile = File.open( csvFileName, 'ab' )
 
 #add header
-header = String.new("ip, inetnum,netname,descr,country,status,mnt-by,source,extra1,extra2,extra3,extra4\n")
+header = String.new("ip, inetnum,netname,descr,country,status,mnt-by,source,extra1,extra2,extra3,extra4,reverseDNS\n")
 csvFile.write( header )
 
 def callRIPE(ip, csvFile)
@@ -57,6 +57,15 @@ def callRIPE(ip, csvFile)
 	result.each do |hash|
 		csvString << "#{hash['value']},"
 	end
+
+	#get reverse dns
+	dnsResource = 'https://stat.ripe.net/data/reverse-dns/data.json?resource=' + ip
+	uri2 = URI(dnsResource)
+	response2 = Net::HTTP.get(uri2)
+	data2 = JSON.parse(response2)
+	result2 = data2['data']['delegations'][0][0]['value']
+	csvString << "#{result2}"
+
 	csvString << "#{csvString}\n"
 	csvFile.write( csvString )
 end
