@@ -63,8 +63,12 @@ def callRIPE(ip, csvFile)
 	uri2 = URI(dnsResource)
 	response2 = Net::HTTP.get(uri2)
 	data2 = JSON.parse(response2)
-	result2 = data2['data']['delegations'][0][0]['value']
-	csvString << "#{result2}"
+
+	if (!data2['data']['delegations'].empty?)
+		puts "its blank"
+		result2 = data2['data']['delegations'][0][0]['value']
+		csvString << "#{result2}"
+	end
 
 	csvString << "#{csvString}\n"
 	csvFile.write( csvString )
