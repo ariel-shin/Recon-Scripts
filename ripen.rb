@@ -40,7 +40,7 @@ file.close
 csvFile = File.open( csvFileName, 'ab' )
 
 #add header
-header = String.new("inetnum,netname,descr,country,status,mnt-by,source,extra1,extra2,extra3,extra4\n")
+header = String.new("ip, inetnum,netname,descr,country,status,mnt-by,source,extra1,extra2,extra3,extra4\n")
 csvFile.write( header )
 
 def callRIPE(ip, csvFile)
@@ -52,11 +52,12 @@ def callRIPE(ip, csvFile)
 	# iterate through the records
 	csvString = String.new
 	csvString.clear
+	csvString << "#{ip},"
 	result = data['data']['records'][0]
 	result.each do |hash|
 		csvString << "#{hash['value']},"
 	end
-	csvString = "#{csvString}\n"
+	csvString << "#{csvString}\n"
 	csvFile.write( csvString )
 end
 
