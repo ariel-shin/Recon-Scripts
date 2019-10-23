@@ -22,41 +22,44 @@ shodanScraper.py takes a list of IP addresses and creates a csv file with the sh
 This script is modified from https://scooby.blog/2018/01/11/shodan-search-multiple-ip-addresses-with-python-script/
 
 ### Running shodanScraper.py
-To get shodanscript running, you must have a) python installed b) shodan installed
+To get shodanScraper running, you must have a) python installed b) shodan installed
 
 
 To install shodan on Windows, download python then follow these steps
-
-*py -m easy_install shodan* 
-
+```installshodan
+py -m easy_install shodan
+```
 
 Most likely, you will get a lot of errors saying packages are missing. A few packages that might be missing are: urllib3, chardet, certifi, idna, and click
-*py -m easy_install packageThatIsMissing*
-
+```
+py -m easy_install packageThatIsMissing
+```
 
 Log on to your Shodan account and copy your API key on the top right bar
-
-*py -m shodan init yourAPIkey*
-
+```
+py -m shodan init yourAPIkey
+```
 
 To **finally** run the package
-
-*py .\shodanscript.py .\iplist.txt*
-
+```
+py .\shodanScraper.py .\iplist.txt
+```
 // iplist.txt is the list of ip in a text file
 
 
 To install shodan on Mac, download python then follow these steps
-
-*python -m easy_install shodan*
-
+```
+python -m easy_install shodan
+```
 Most likely, you will get a lot of errors saying packages are missing. A few packages that might be missing are: urllib3, chardet, certifi, idna, and click
-*python -m easy_install packageThatIsMissing*
-
+```
+python -m easy_install packageThatIsMissing
+```
 Log on to your Shodan account and copy your API key on the top right bar
-
-*python -m shodan init yourAPIkey*
-
+```
+python -m shodan init yourAPIkey
+```
 To **finally** run the package
-
-*python shodanscript.py .\iplist.txt*
+```
+python shodanScraper.py .\iplist.txt*
+```
