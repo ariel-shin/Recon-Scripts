@@ -46,4 +46,17 @@ To **finally** run the package
 // iplist.txt is the list of ip in a text file
 
 
+To install shodan on Mac, download python then follow these steps
 
+*python -m easy_install shodan*
+
+Most likely, you will get a lot of errors saying packages are missing. A few packages that might be missing are: urllib3, chardet, certifi, idna, and click
+*python -m easy_install packageThatIsMissing*
+
+Log on to your Shodan account and copy your API key on the top right bar
+
+*python -m shodan init yourAPIkey*
+
+To **finally** run the package
+
+*python shodanscript.py .\iplist.txt*
